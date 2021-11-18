@@ -1,0 +1,135 @@
+<html>
+    <head>
+        <style>
+            .viewer
+            {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 80vmin;
+            }   
+
+            .foto
+            {
+                margin-top: 10vmin;
+                height: 100%;
+            }
+
+
+            .under_text
+            {
+                text-align: center;
+                width: 100vw;
+                margin-top: 7vmin;
+
+
+                color: darkgrey;
+            }
+        </style>
+    </head>
+<body>
+    <script>
+        let imgNames = [
+            "gestandaardiseerd.jpg"
+            , "goede_ideeen.jpg"
+            , "investeren.jpg"
+            , "irritant.jpg"
+            , "jeugd_van_tegenwoordig.jpg"
+            , "juist_correct.jpg"
+            , "kriebels.jpg"
+            , "man_bij_auto.jpg"
+            , "middelen.jpg"
+            , "niet_op_letten.jpg"
+            , "onder_invloed.jpg"
+            , "persoonlijkheid.jpg"
+            , "vrijdag_middag.jpg"
+            , "vrije_markt.jpg"
+            , "wasrek.jpg"
+            , "bodemloos.jpg"
+            , "dagelijkse_bezigheden.jpg"
+            // , "er_middenin.jpg"
+            , "deel.jpg"
+        ]
+
+        function image(path)
+        {
+            let img = new Image();
+            img.src = path;
+            return img;
+        }
+
+        function foto(path)
+        {
+            let foto = image(path);
+            foto.classList.add("foto");
+            return foto;
+        }
+
+        function fotos(paths)
+        {
+            return fotos = paths.map(path => foto(path));
+        }
+
+        function prefixList(prefix, texts)
+        {
+            return texts.map(text => prefix + text);
+        }
+
+        let imgPaths = prefixList("./fotos/", imgNames);
+        
+        function divWithAllImages(pahts)
+        {
+            let fotoElements = fotos(paths);
+            let container = document.createElement("div");
+            fotoElements.reduce((prev,curr) => container.appendChild(curr));
+        }
+
+        function underText (text)
+        {
+            let textElement = document.createElement('p');
+            textElement.classList = ["under_text"];
+            textElement.innerHTML = text;
+            return textElement;
+        }
+
+        let viewer = document.createElement('div');
+        viewer.classList = ["viewer"];
+        
+        
+        let startImageIndex = 5;
+        let imageInViewer = foto(imgPaths[startImageIndex]);
+        let title = underText(imgNames[startImageIndex]);
+        
+        viewer.appendChild(imageInViewer);
+        document.body.appendChild(viewer);
+        document.body.appendChild(title);
+
+        function updateImage(newPath)
+        {
+            imageInViewer.src = newPath;
+        }
+
+        function updateTitle(newTitle)
+        {
+            title.innerHTML = newTitle;
+        }
+
+        function updatePageWithIndex(index = 1)
+        {
+            updateImage(imgPaths[index]);
+            updateTitle(imgNames[index]);
+        }
+
+        function updatePageRandomly()
+        {
+            updatePageWithIndex(Math.floor(Math.random() * imgNames.length));
+        }
+
+        document.body.addEventListener("click", () => updatePageRandomly(1))
+
+       
+    </script>
+
+
+</body>
+</html>
